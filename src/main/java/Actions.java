@@ -38,6 +38,18 @@ public class Actions
     private JRadioButton twocoluminputdataradiobutton;
     private JRadioButton threecolumninputdataradiobutton;
     private JLabel inputdatalabel;
+    private JLabel actionlabel;
+    private JButton prefitbutton;
+    private JComboBox numberofparameters;
+    private JLabel numberofparametersacitonlabel;
+    private JButton fitButton;
+    private JButton mcactionbutton;
+    private JLabel parameteryactionlabel;
+    private JLabel parameterxactionlabel;
+    private JComboBox parameterxaction;
+    private JComboBox parameteryaction;
+    private JButton abortMonteCarloButton;
+    private JButton resetButton;
 
     private void createUIComponents()
     {

@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jfree:jfreechart:1.5.4")
+    implementation("commons-io:commons-io:2.12.0")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }

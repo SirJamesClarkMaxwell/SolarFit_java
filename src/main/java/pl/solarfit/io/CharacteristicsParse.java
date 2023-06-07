@@ -43,7 +43,6 @@ public class CharacteristicsParse
 
     private int maxComparator(MPoint oldPoint, MPoint newPoint)
     {
-
         return Double.compare(oldPoint.getY(), newPoint.getY());
     }
 

@@ -6,5 +6,6 @@ public class Plots
 {
     private JSlider bottomslider;
     private JSlider topslider;
-    private JComboBox chartselector;
+    private JList characteristicsList;
+    private JPanel chartField;
 }

@@ -34,7 +34,7 @@ public class ProposalCharacteristicParse extends CharacteristicsParse
         percent + this.percentStep)
         {
 
-            ArrayList<MPoint> actualCharacteristic = autoRange(this.parseCharacteristics()), percent);
+            ArrayList<MPoint> actualCharacteristic = autoRange(this.parseCharacteristics()), percent)
             ArrayList<MPoint> preFitCharacteristic = new PreFitDataToAutoRange(this.characteristic).cauculateCurrent(actualCharacteristic);
 
             listOfParseData.setElementOfList(i, percent, calculateChi2(preFitCharacteristic, actualCharacteristic));

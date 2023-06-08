@@ -59,10 +59,11 @@ public class Parameters
     public String toString()
     {
         StringBuilder toString = new StringBuilder();
-        toString1.append("A  =" + this.A);
-        toString1.append("I0  =" + this.I0);
-        toString1.append("Rs  =" + this.Rs);
-        toString1.append("Rch  =" + this.Rch);
-        return toString;
+        toString.append("A  =" + this.A);
+        toString.append("I0  =" + this.I0);
+        toString.append("Rs  =" + this.Rs);
+        toString.append("Rch  =" + this.Rch);
+
+        return toString.toString();
     }
 }

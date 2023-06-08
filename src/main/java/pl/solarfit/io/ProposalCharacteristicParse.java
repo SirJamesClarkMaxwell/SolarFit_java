@@ -1,7 +1,9 @@
 package pl.solarfit.io;
 
+import pl.solarfit.exeptions.DindntFindBestParse;
 import pl.solarfit.simplex.MPoint;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public class ProposalCharacteristicParse extends CharacteristicsParse
 {
     private double maxParsePercent;
     private double percentStep;
-    private final   bestPercentParse;
+    private final bestPercentParse;
 
     public ProposalCharacteristicParse(List<String> characteristic, double maxParsePercent, double percentStep)
     {
@@ -27,7 +29,7 @@ public class ProposalCharacteristicParse extends CharacteristicsParse
     {
 
         DataToParseCharacteristic listOfParseData = new DataToParseCharacteristic(this.parseCharacteristics().toArray().length);
-
+        int i = 0;
         for (double percent = 0.00; percent =<this.maxParsePercent;
         percent + this.percentStep)
         {
@@ -35,22 +37,35 @@ public class ProposalCharacteristicParse extends CharacteristicsParse
             ArrayList<MPoint> actualCharacteristic = autoRange(this.parseCharacteristics()), percent);
             ArrayList<MPoint> preFitCharacteristic = new PreFitDataToAutoRange(this.characteristic).cauculateCurrent(actualCharacteristic);
 
-            listOfParseData.setElementOfList(i,percent,calculateChi2(preFitCharacteristic,actualCharacteristic));
+            listOfParseData.setElementOfList(i, percent, calculateChi2(preFitCharacteristic, actualCharacteristic));
+            i++;
         }
 
-        double bestPercentPercentParse = new  Double.parseDouble(listOfParseData.stream().max(this::maxComparator(    new MPoint().setY(); new MPoint().setY();  )))
-        // ! tutaj należy się zastanowić jak przekazać do funkcji setY() wartości chi2 każdego z elementów listy listOfParseData
+        double bestPercentPercentParse = new Double.parseDouble(listOfParseData.stream().min(this::minComparator).map(x -> x.getY()));
+
         this.bestPercentParse = bestPercentPercentParse;
-        return this.bestPercentParse
 
-
+        return Double.parseDouble(listOfParseData.stream().min(this::minComparator).map(x -> x.getY()))
     }
 
 
+    private int minComparator(Point oldPoint, Point newPoint)
+    {
+        return Integer.compare(oldPoint.getY(), newPoint.getY())
+    }
+
     private double calculateChi2(List<MPoint> proposalCharacteristic, List<MPoint> checkedCharacteristic)
-        {
-            double chi2 = 0;
-            for (int i = 0; i < proposalCharacteristic.toArray().length; i++)
-                chi2 += Math.pow(proposalCharacteristic[i] - checkedCharacteristic[i], 2);
-            return chi2;
-        }
+    {
+        double chi2 = 0;
+        for (int i = 0; i < proposalCharacteristic.toArray().length; i++)
+            chi2 += Math.pow(proposalCharacteristic[i] - checkedCharacteristic[i], 2);
+        return chi2;
+    }
+
+    public List<MPoint> getBestParseCharacteristic()
+    {
+        if(this.bestPercentParse =< 0)
+            throw new DindntFindBestParse();
+        return autoRange(this.parseCharacteristics()), this.bestPercentParse)
+    }
+}

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class WriteData
 {
-    public void savaDataIntoFile
+    public void savaDataIntoFile;
     private  String nameOfFile;
     private String path;
     private List<String> toWrite;

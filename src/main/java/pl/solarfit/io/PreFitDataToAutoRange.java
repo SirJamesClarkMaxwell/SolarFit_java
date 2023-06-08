@@ -36,7 +36,7 @@ public class PreFitDataToAutoRange
 
     public void setA(double A)
     {
-        A = A;
+        this.A = A;
     }
 
     public double getI0()
@@ -46,7 +46,7 @@ public class PreFitDataToAutoRange
 
     public void setI0(double i0)
     {
-        I0 = I0;
+        this.I0 = I0;
     }
 
     public double getRs()
@@ -56,7 +56,7 @@ public class PreFitDataToAutoRange
 
     public void setRs(double Rs)
     {
-        Rs = Rs;
+        this.Rs = Rs;
     }
 
     public double getRch()
@@ -66,7 +66,7 @@ public class PreFitDataToAutoRange
 
     public void setRch(double Rch)
     {
-        Rch = Rch;
+        this.Rch = Rch;
     }
 
     private double calculatePointCurrent(MPoint point)

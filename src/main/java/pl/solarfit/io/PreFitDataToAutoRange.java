@@ -5,6 +5,8 @@ import pl.solarfit.simplex.MPoint;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.stream;
+
 public class PreFitDataToAutoRange
 {
     private double A;
@@ -14,20 +16,20 @@ public class PreFitDataToAutoRange
     private double Temp;
     private String characteristic;
 
-    public PreFitDataToAutoRangedouble(String characteristic)
+    public PreFitDataToAutoRange(String characteristic)
     {
         this.characteristic = characteristic;
         A = 1.5547204920937916;
         I0 = 2.193499941021898E-12;
         Rs = 22.154510438399992;
         Rch = 25414.455907592604;
-        Temp = Double.parseDouble(characteristic.split("_").stream().filter(string -> string.startsWith("T")).substring(1, 3);
+        Temp = Double.parseDouble(stream(characteristic.split("_")).filter(string -> string.startsWith("T")).map(x -> x.substring(1, 3)).collect(Collectors.joining()));
     }
 
     public double getTemp()
     {
         return Temp;
-    })
+    }
 
     public double getA()
     {
@@ -80,7 +82,7 @@ public class PreFitDataToAutoRange
         double x1 = Math.min(0.0, -(1.0 + b) / a);
         double x2 = -b / a;
         double x = 0.0;
-        double n = Math.ceil(this.log2((x2 - x1) / 1.0E-12));
+        double n = Math.ceil(Math.log((x2 - x1) / 1.0E-12) / Math.log(2));
 
         for (int i = 0; i < (int) n; ++i)
         {
@@ -100,13 +102,18 @@ public class PreFitDataToAutoRange
 
     public List<MPoint> cauculateCurrent(List<MPoint> refrenceCharacteristic)
     {
-        return refrenceCharacteristic.stream().map(this::deapCopy ()).forEach(x -> x.setY(this::calculatePointCurrent
-        (x))).collect(Collectors.toList())
+        return refrenceCharacteristic.stream().map(this::deepCopy).map(this::doAlgebra).collect(Collectors.toList());
     }
 
-    private List<MPoint> deepCopy(List<MPoint> toCopy)
+    private MPoint doAlgebra(MPoint point)
     {
-        return toCopy.stream().forEach(new MPoint(toCopy.getX(), toCopy.getY(), toCopy.getZ())).collect(Collectors.toList());
+        point.setY(calculatePointCurrent(point));
+        return point;
+    }
+
+    private MPoint deepCopy(MPoint toCopy)
+    {
+        return new MPoint(toCopy.getX(), toCopy.getY(), toCopy.getZ());
     }
 
 

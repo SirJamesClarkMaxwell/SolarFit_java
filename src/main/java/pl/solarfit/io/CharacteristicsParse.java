@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class CharacteristicsParse
 {
-    private final List<String> characteristic;
+    protected final List<String> characteristic;
 
     public CharacteristicsParse(List<String> characteristic)
     {

@@ -1,13 +1,14 @@
 package pl.solarfit.io;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
 public class WriteData
 {
-    public void savaDataIntoFile;
-    private  String nameOfFile;
+    public String savaDataIntoFile;
+    private String nameOfFile;
     private String path;
     private List<String> toWrite;
 
@@ -30,3 +31,4 @@ public class WriteData
             e.printStackTrace();
         }
     }
+}

@@ -42,34 +42,21 @@ public class MainWindow
     {
         root = new JPanel();
         root.setLayout(new GridBagLayout());
-        button1dfghjk = new JButton();
-        button1dfghjk.setText("Button");
-        GridBagConstraints gbc;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        root.add(button1dfghjk, gbc);
-        checkBox1 = new JCheckBox();
-        checkBox1.setText("CheckBox");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        root.add(checkBox1, gbc);
         actoionContainer = new JPanel();
         actoionContainer.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.BOTH;
         root.add(actoionContainer, gbc);
         final Actions nestedForm1 = new Actions();
         actoionContainer.add(nestedForm1.$$$getRootComponent$$$(), new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Settings nestedForm2 = new Settings();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        root.add(nestedForm2.$$$getRootComponent$$$(), gbc);
     }
 
     /**

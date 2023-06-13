@@ -1,7 +1,25 @@
 package pl.solarfit.view;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Plots
 {
@@ -14,8 +32,112 @@ public class Plots
     private JList list1;
     private JPanel plotPanel;
 
+    public Plots() {
+        plotCovarianceRsRchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        plotCovarianceAI0Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        poltMonteCarloResultsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        plotCharacteristicsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        list1.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+            }
+        });
+        bottomslider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+
+            }
+        });
+        topslider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+
+            }
+        });
+    }
+        private XYDataset createDataset() {
+
+            var series1= new XYSeries(""); //nazwa serii
+            series1.add(18, 567);          //dane do serii, czyli wczytaj skads x i y i zrób serieA.
+            series1.add(20, 612);
+            series1.add(25, 800);
+            series1.add(30, 980);
+            series1.add(40, 1410);
+            series1.add(50, 2350);
+            XYSeriesCollection dataset = new XYSeriesCollection();
+            dataset.addSeries(series1);         //dodanie serii(mozna dodac wiecej, zeby bylo kilka wykresow na jednym panelu)
+
+            return dataset;
+        }
+
+        private JFreeChart createChart(XYDataset dataset) {
+
+            JFreeChart chart = ChartFactory.createXYLineChart(
+                    "", //tytul
+                    "U [V]",     //x label
+                    "I [mA]",   //y label
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    true,
+                    false
+            );
+
+            XYPlot plot = chart.getXYPlot();
+
+            var renderer = new XYLineAndShapeRenderer();
+            renderer.setSeriesPaint(0, Color.RED);
+            renderer.setSeriesStroke(0, new BasicStroke(2.0f)); //kolor wykresu pierwszej serii
+
+            plot.setRenderer(renderer);
+            plot.setBackgroundPaint(Color.white);
+
+            plot.setRangeGridlinesVisible(true);
+            plot.setRangeGridlinePaint(Color.BLACK);
+
+            plot.setDomainGridlinesVisible(true);
+            plot.setDomainGridlinePaint(Color.BLACK);
+
+            chart.getLegend().setFrame(BlockBorder.NONE);
+
+            chart.setTitle(new TextTitle("",
+                            new Font("Serif", java.awt.Font.BOLD, 18)
+                    )
+            );
+
+            return chart;
+        }
+
     private void createUIComponents()
     {
+        XYDataset dataset = createDataset();
+        JFreeChart chart = createChart(dataset);
+
+        ChartPanel wykres = new ChartPanel(chart);
+        wykres.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        wykres.setBackground(Color.white);
+        plotPanel.add(wykres);              //stworz panel wykresu i dodaj go do panelu od wykresu
         // TODO: place custom component creation code here
     }
 

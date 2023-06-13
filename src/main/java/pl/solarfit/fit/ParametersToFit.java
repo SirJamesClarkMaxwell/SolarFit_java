@@ -1,11 +1,11 @@
 package pl.solarfit.fit;
+
 import pl.solarfit.simplex.ImplementsSimplex;
 import pl.solarfit.simplex.MPoint;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public abstract  class ParametersToFit
+public abstract class ParametersToFit
 {
 
     double[] noweParametry = new double[4];
@@ -15,11 +15,11 @@ public abstract  class ParametersToFit
     double[] bMax = new double[4];
     double temp;
     ImplementsSimplex sim = null;
-    List<MPoint> dane = new ArrayList<MPoint>();
-    List<MPoint> fitted = new ArrayList<MPoint>();
+    ArrayList<MPoint> dane = new ArrayList<MPoint>();
+    ArrayList<MPoint> fitted = new ArrayList<MPoint>();
 
 
-    public ParametersToFit(double[] noweParametry, double[] parametry, double[] lambda, double[] bMin, double[] bMax,double temp)
+    public ParametersToFit(double[] noweParametry, double[] parametry, double[] lambda, double[] bMin, double[] bMax, double temp)
     {
         this.noweParametry = noweParametry;
         this.parametry = parametry;
@@ -39,6 +39,7 @@ public abstract  class ParametersToFit
         return lambda;
     }
 
+    protected abstract void fit();
 }
 
 /*

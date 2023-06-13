@@ -1,140 +1,62 @@
 package pl.solarfit.fit;
-import pl.solarfit.simplex.ImplementsSimplex;
-public class Fit
+
+import pl.solarfit.simplex.MPoint;
+
+import java.util.ArrayList;
+
+public class Fit extends ParametersToFit
 {
-    public void daneFit(boolean append)
+    public double[][] deltaChi2 = new double[][]{{1.0D, 4.0D, 9.0D}, {2.3D, 6.17D, 11.8D}, {3.53D, 8.02D, 14.2D}, {4.72D, 9.7D, 16.3D}};
+    private ArrayList<Double> parI = new ArrayList<Double>();
+    private ArrayList<Double> parA = new ArrayList<Double>();
+    private ArrayList<Double> parRs = new ArrayList<Double>();
+    private ArrayList<Double> parRsch = new ArrayList<Double>();
+    private ArrayList<Double> chi2 = new ArrayList<Double>();
+    private ArrayList<MPoint> mcInit = new ArrayList<MPoint>();
+    private int NFD;
+    private int MCX;
+    private int MCY;
+    private boolean append = true;
+    private double noise;
+
+    public Fit(double[] noweParametry, double[] parametry, double[] lambda, double[] bMin, double[] bMax, double temp)
+    {
+        super(noweParametry, parametry, lambda, bMin, bMax, temp);
+    }
+
+    public boolean isAppend()
+    {
+        return append;
+    }
+
+    public void setAppend(boolean append)
+    {
+        this.append = append;
+    }
+
+    public double getNoise()
+    {
+        return noise;
+    }
+
+    public void setNoise(double noise)
+    {
+        this.noise = Double.parseDouble(String.valueOf(noise)) / 100.0D;
+    }
+
+    @Override
+    protected void fit()
     {
 
-        double[] noweParametry = new double[4];
-        double[] parametry = new double[4];
-        double[] lambda = new double[4];
-        double[] bMin = new double[4];
-        double[] bMax = new double[4];
-
         int chi2seg = 0;
-        String curTab = null;
-        bMin[0] = Double.parseDouble(this.gui.bMin0.getText());
-        bMin[1] = Double.parseDouble(this.gui.bMin1.getText());
-        bMin[2] = Double.parseDouble(this.gui.bMin2.getText());
-        bMin[3] = Double.parseDouble(this.gui.bMin3.getText());
-
-        bMax[0] = Double.parseDouble(this.gui.bMax0.getText());
-        bMax[1] = Double.parseDouble(this.gui.bMax1.getText());
-        bMax[2] = Double.parseDouble(this.gui.bMax2.getText());
-        bMax[3] = Double.parseDouble(this.gui.bMax3.getText());
-
-        parametry[0] = Double.parseDouble(this.gui.par0.getText());
-        parametry[1] = Double.parseDouble(this.gui.par1.getText());
-        parametry[2] = Double.parseDouble(this.gui.par2.getText());
-        parametry[3] = Double.parseDouble(this.gui.par3.getText());
-
-        lambda = getLambda(parametry);
-
-        double temp = Double.parseDouble(this.gui.temp.getText());
-        noweParametry[0] = 0.0D;
-        noweParametry[1] = 0.0D;
-        noweParametry[2] = 0.0D;
-        noweParametry[3] = 0.0D;
 
         this.sim.setTemp(temp);
         this.sim.setBounds(bMax, bMin);
         this.sim.minimalizeAnnealed();
 
         noweParametry = this.sim.getFitedPar();
-
-        this.fit.clear();
-        this.fit = this.sim.fitedCurve(noweParametry);
-        double newChi2 = getChi2();
-        if (append)
-        {
-            if (newChi2 < this.deltaChi2[0][0])
-            {
-                chi2seg = 1;
-            } else if (newChi2 < this.deltaChi2[0][1])
-            {
-                chi2seg = 2;
-            } else if (newChi2 < this.deltaChi2[0][2])
-            {
-                chi2seg = 3;
-            }
-            log(noweParametry[0] + "\t" + noweParametry[1] + "\t" + noweParametry[2] + "\t" + noweParametry[3] + "\t" + newChi2 + "\t" + chi2seg);
-        }
-        int ndf = getNDF();
-        int mcX = getMCX();
-        int mcY = getMCY();
-
-        if (append)
-        {
-            curTab = this.gui.tabs.getComponentAt(this.gui.tabs.getSelectedIndex()).getName();
-            if ("tabPlot".equals(curTab))
-            {
-                plotData(this.gui.logScaleButton.isSelected());
-            } else if ("tabCovRR".equals(curTab))
-            {
-                plotRR();
-            } else if ("tabCovIA".equals(curTab))
-            {
-                plotIA();
-            } else if ("tabMC".equals(curTab))
-            {
-                plotMC(ndf, mcX, mcY);
-            }
-            this.parI.add(Double.valueOf(noweParametry[0]));
-            this.parA.add(Double.valueOf(noweParametry[1]));
-            this.parRsch.add(Double.valueOf(noweParametry[2]));
-            this.parRs.add(Double.valueOf(noweParametry[3]));
-            this.chi2.add(Double.valueOf(newChi2));
-
-        } else
-        {
-            plotData(this.gui.logScaleButton.isSelected());
-        }
-
-        this.gui.parFit0.setText(String.valueOf(noweParametry[0]));
-        this.gui.parFit1.setText(String.valueOf(noweParametry[1]));
-        this.gui.parFit2.setText(String.valueOf(noweParametry[2]));
-        this.gui.parFit3.setText(String.valueOf(noweParametry[3]));
-
-        public void daneFit ( boolean append){
-        double[] noweParametry = new double[4];
-        double[] parametry = new double[4];
-        double[] lambda = new double[4];
-        double[] bMin = new double[4];
-        double[] bMax = new double[4];
-
-        int chi2seg = 0;
-        String curTab = null;
-        bMin[0] = Double.parseDouble(this.gui.bMin0.getText());
-        bMin[1] = Double.parseDouble(this.gui.bMin1.getText());
-        bMin[2] = Double.parseDouble(this.gui.bMin2.getText());
-        bMin[3] = Double.parseDouble(this.gui.bMin3.getText());
-
-        bMax[0] = Double.parseDouble(this.gui.bMax0.getText());
-        bMax[1] = Double.parseDouble(this.gui.bMax1.getText());
-        bMax[2] = Double.parseDouble(this.gui.bMax2.getText());
-        bMax[3] = Double.parseDouble(this.gui.bMax3.getText());
-
-        parametry[0] = Double.parseDouble(this.gui.par0.getText());
-        parametry[1] = Double.parseDouble(this.gui.par1.getText());
-        parametry[2] = Double.parseDouble(this.gui.par2.getText());
-        parametry[3] = Double.parseDouble(this.gui.par3.getText());
-
-        lambda = getLambda(parametry);
-
-        double temp = Double.parseDouble(this.gui.temp.getText());
-
-        noweParametry[0] = 0.0D;
-        noweParametry[1] = 0.0D;
-        noweParametry[2] = 0.0D;
-        noweParametry[3] = 0.0D;
-
-        this.sim.setTemp(temp);
-        this.sim.setBounds(bMax, bMin);
-        this.sim.minimalizeAnnealed();
-
-        noweParametry = this.sim.getFitedPar();
-        this.fit.clear();
-        this.fit = this.sim.fitedCurve(noweParametry);
+        this.fitted.clear();
+        this.fitted = this.sim.fitedCurve(noweParametry);
         double newChi2 = getChi2();
 
         if (append)
@@ -149,52 +71,83 @@ public class Fit
             {
                 chi2seg = 3;
             }
-            log(noweParametry[0] + "\t" + noweParametry[1] + "\t" + noweParametry[2] + "\t" + noweParametry[3] + "\t" + newChi2 + "\t" + chi2seg);
         }
-        int ndf = getNDF();
+        int ndf = getNFD();
         int mcX = getMCX();
         int mcY = getMCY();
         if (append)
         {
-            curTab = this.gui.tabs.getComponentAt(this.gui.tabs.getSelectedIndex()).getName();
-
-            if ("tabPlot".equals(curTab))
-            {
-                plotData(this.gui.logScaleButton.isSelected());
-
-            } else if ("tabCovRR".equals(curTab))
-            {
-                plotRR();
-
-            } else if ("tabCovIA".equals(curTab))
-            {
-                plotIA();
-
-            } else if ("tabMC".equals(curTab))
-            {
-                plotMC(ndf, mcX, mcY);
-            }
-
             this.parI.add(Double.valueOf(noweParametry[0]));
-
             this.parA.add(Double.valueOf(noweParametry[1]));
-
             this.parRsch.add(Double.valueOf(noweParametry[2]));
-
             this.parRs.add(Double.valueOf(noweParametry[3]));
-
             this.chi2.add(Double.valueOf(newChi2));
-
-        } else
-        {
-
-            plotData(this.gui.logScaleButton.isSelected());
         }
 
-        this.gui.parFit0.setText(String.valueOf(noweParametry[0]));
-        this.gui.parFit1.setText(String.valueOf(noweParametry[1]));
-        this.gui.parFit2.setText(String.valueOf(noweParametry[2]));
-        this.gui.parFit3.setText(String.valueOf(noweParametry[3]));
     }
+
+    /* protected int getNDF()
+     {
+         return this.gui.mcNDF.getSelectedIndex();
+     }
+
+     protected int getMCX()
+     {
+         return this.gui.mcX.getSelectedIndex();
+     }
+     protected int getMCY()
+     {
+         return this.gui.mcY.getSelectedIndex();
+     }
+ */
+
+    private double getChi2()
+    {
+        double suma_chi2 = 0.0D;
+        double pomiar_chi2 = 0.0D;
+
+        if (this.mcInit.size() > 0)
+        {
+            for (int i = 0; i < this.fitted.size(); i++)
+            {
+                double sigma = ((MPoint) this.fitted.get(i)).getY() * noise;
+                pomiar_chi2 = Math.pow((((MPoint) this.fitted.get(i)).getY() - ((MPoint) this.mcInit.get(i)).getY()) / sigma, 2.0D);
+                suma_chi2 += pomiar_chi2;
+            }
+            return suma_chi2;
+        }
+        return 0.0D;
     }
+
+    public int getNFD()
+    {
+        return NFD;
+    }
+
+    public void setNFD(int NFD)
+    {
+        this.NFD = NFD;
+    }
+
+    public int getMCY()
+    {
+        return MCY;
+    }
+
+    public void setMCY(int MCY)
+    {
+        this.MCY = MCY;
+    }
+
+    public int getMCX()
+    {
+        return MCX;
+    }
+
+    public void setMCX(int MCX)
+    {
+        this.MCX = MCX;
+    }
+
 }
+

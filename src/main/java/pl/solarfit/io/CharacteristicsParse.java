@@ -21,13 +21,20 @@ public class CharacteristicsParse
         return this.characteristic.stream().map(x -> x.split("\t")).map(this::convertData).collect(Collectors.toList());
     }
 
-    private MPoint convertData(String[] data)
+    private MPoint convertData(String[] data,boolean isLog)
+
     {
         double x = Double.parseDouble(data[0]);
-        double y = Math.log(Math.abs((double)Double.parseDouble(data[1])));
+        double y = 0;
         double z = Double.parseDouble(data[2]);
+
+        if (isLog)
+        {
+        y = Math.log(Math.abs((double)Double.parseDouble(data[1])));
+        }
+        else { y = Double.parseDouble(data[1]);}
+
         return new MPoint(x, y, z);
-    }
 
     /**
      * @param dataToAutoRange

@@ -27,7 +27,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Plots
 {
@@ -152,6 +151,13 @@ public class Plots
         this.stringDatafiles = stringDatafiles;
     }
 
+//    public List<MPoint> autoRange(List<MPoint> dataToAutoRange, double percent)
+//    {
+//        double maxCurrent = findMaxValue(dataToAutoRange);
+//        return dataToAutoRange.stream().filter(x -> x.getY() < maxCurrent * (100 - percent)).collect(Collectors.toList());
+//
+//    }
+
     private XYDataset createDataset() throws CloneNotSupportedException
     {
         List<XYSeries> seriesOfData = new ArrayList<>();
@@ -167,7 +173,7 @@ public class Plots
             for (MPoint currentPoint : rangedCharacteristic)
                 currentSeries.add(currentPoint.getX(), currentPoint.getY());
             int lengthOfCurrentSeries = currentSeries.getItemCount();
-            //XYSeries neeSeries = currentSeries.createCopy(0, lengthOfCurrentSeries);
+
             seriesOfData.add((XYSeries) currentSeries.clone());
             currentSeries.clear();
         }
@@ -204,8 +210,18 @@ public class Plots
     public List<MPoint> autoRange(List<MPoint> dataToAutoRange, double percent)
     {
         double maxCurrent = findMaxValue(dataToAutoRange);
-        return dataToAutoRange.stream().filter(x -> x.getY() < maxCurrent * (100 - percent)).collect(Collectors.toList());
+        double threshold = maxCurrent * (1 - (percent / 100));
 
+        List<MPoint> filteredData = new ArrayList<>();
+        for (MPoint point : dataToAutoRange)
+        {
+            if (point.getY() < threshold)
+            {
+                filteredData.add(point);
+            }
+        }
+
+        return filteredData;
     }
 
     private int maxComparator(MPoint oldPoint, MPoint newPoint)
@@ -213,9 +229,27 @@ public class Plots
         return Double.compare(oldPoint.getY(), newPoint.getY());
     }
 
+    //    private double findMaxValue(List<MPoint> pointToCheck)
+//    {
+//        return pointToCheck.stream().max(this::maxComparator).map(MPoint::getY).orElseThrow(MaxValuNotFoundExeption::new);
+//    }
     private double findMaxValue(List<MPoint> pointToCheck)
     {
-        return pointToCheck.stream().max(this::maxComparator).map(MPoint::getY).orElseThrow(MaxValuNotFoundExeption::new);
+        if (pointToCheck.isEmpty())
+        {
+            throw new MaxValuNotFoundExeption();
+        }
+
+        double maxValue = pointToCheck.get(0).getY();
+        for (MPoint point : pointToCheck)
+        {
+            if (point.getY() > maxValue)
+            {
+                maxValue = point.getY();
+            }
+        }
+
+        return maxValue;
     }
 
     private JFreeChart createChart(XYDataset dataset)

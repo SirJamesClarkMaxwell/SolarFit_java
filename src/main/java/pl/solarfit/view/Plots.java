@@ -146,17 +146,17 @@ public class Plots
         return stringDatafiles;
     }
 
-    public void setStringDatafiles(List<List<String>> stringDatafiles)
-    {
-        this.stringDatafiles = stringDatafiles;
-    }
-
 //    public List<MPoint> autoRange(List<MPoint> dataToAutoRange, double percent)
 //    {
 //        double maxCurrent = findMaxValue(dataToAutoRange);
 //        return dataToAutoRange.stream().filter(x -> x.getY() < maxCurrent * (100 - percent)).collect(Collectors.toList());
 //
 //    }
+
+    public void setStringDatafiles(List<List<String>> stringDatafiles)
+    {
+        this.stringDatafiles = stringDatafiles;
+    }
 
     private XYDataset createDataset() throws CloneNotSupportedException
     {
@@ -166,11 +166,12 @@ public class Plots
         for (int i = 0; i < this.stringDatafiles.size(); i++)
         {
             XYSeries currentSeries = new XYSeries("");
-            List<MPoint> currentCharacteristic = new CharacteristicsParse(this.stringDatafiles.get(i)).parseCharacteristics();
-            List<MPoint> rangedCharacteristic = autoRange(currentCharacteristic, 10);
+            List<MPoint> currentCharacteristic = new CharacteristicsParse(this.stringDatafiles.get(i), false).parseCharacteristics();
+            int upperLimitOfcharacteristic = autoRange(currentCharacteristic, 10);
+            List<MPoint> logRnagedCharacteristic = recreateCharacteristic(currentCharacteristic, upperLimitOfcharacteristic);
             // tutaj do podmiany jest na ProposalCharacterisitcParse
 
-            for (MPoint currentPoint : rangedCharacteristic)
+            for (MPoint currentPoint : logRnagedCharacteristic)
                 currentSeries.add(currentPoint.getX(), currentPoint.getY());
             int lengthOfCurrentSeries = currentSeries.getItemCount();
 
@@ -190,16 +191,8 @@ public class Plots
 //            seriesOfData.add(currentSeries);
 //            currentSeries.clear();
 //        }
-        /*
-        XYSeries series1 = new XYSeries(""); //nazwa serii
-        series1.add(18, 567);          //dane do serii, czyli wczytaj skads x i y i zrób serieA.
-        series1.add(20, 612);
-        series1.add(25, 800);
-        series1.add(30, 980);
-        series1.add(40, 1410);
-        series1.add(50, 2350);
-*/
-        //datasets.addSeries(series1);         //dodanie serii(mozna dodac wiecej, zeby bylo kilka wykresow na jednym panelu)
+
+
         for (XYSeries seriesToAdd : seriesOfData)
             dataSets.addSeries(seriesToAdd);
 
@@ -207,7 +200,16 @@ public class Plots
         return dataSets;
     }
 
-    public List<MPoint> autoRange(List<MPoint> dataToAutoRange, double percent)
+    private List<MPoint> recreateCharacteristic(List<MPoint> characteristicToRecreate, int maxInt)
+    {
+        List<MPoint> recreatedCharacteristic = new ArrayList<>();
+        for (int i = 0; i < maxInt; i++)
+            recreatedCharacteristic.add(new MPoint(characteristicToRecreate.get(i).getX(), Math.log(Math.abs((double) characteristicToRecreate.get(i).getY()))));
+
+        return recreatedCharacteristic;
+    }
+
+    public int autoRange(List<MPoint> dataToAutoRange, double percent)
     {
         double maxCurrent = findMaxValue(dataToAutoRange);
         double threshold = maxCurrent * (1 - (percent / 100));
@@ -221,7 +223,7 @@ public class Plots
             }
         }
 
-        return filteredData;
+        return filteredData.size();
     }
 
     private int maxComparator(MPoint oldPoint, MPoint newPoint)

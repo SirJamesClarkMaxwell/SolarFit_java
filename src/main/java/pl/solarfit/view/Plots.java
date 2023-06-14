@@ -92,7 +92,7 @@ public class Plots
                 d.add(l);
                 d.add(chart);
                 // setsize of dialog
-                d.setSize(100, 100);
+                d.setSize(500, 500);
 
                 // set visibility of dialog
                 d.setVisible(true);

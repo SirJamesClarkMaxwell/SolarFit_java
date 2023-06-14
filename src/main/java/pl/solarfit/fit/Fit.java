@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Fit extends ParametersToFit
 {
     public double[][] deltaChi2 = new double[][]{{1.0D, 4.0D, 9.0D}, {2.3D, 6.17D, 11.8D}, {3.53D, 8.02D, 14.2D}, {4.72D, 9.7D, 16.3D}};
+    private double [] noweParametry = null;
     private ArrayList<Double> parI = new ArrayList<Double>();
     private ArrayList<Double> parA = new ArrayList<Double>();
     private ArrayList<Double> parRs = new ArrayList<Double>();
@@ -19,7 +20,8 @@ public class Fit extends ParametersToFit
 
     public Fit(double[] noweParametry, double[] parametry, double[] lambda, double[] bMin, double[] bMax, double temp)
     {
-        super(noweParametry, parametry, lambda, bMin, bMax, temp);
+        super(parametry, bMin, bMax,temp);
+        this.noweParametry = noweParametry;
     }
 
     public boolean isAppend()

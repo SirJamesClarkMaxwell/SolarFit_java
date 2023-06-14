@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public abstract class ParametersToFit
 {
 
-    double[] noweParametry = new double[4];
     double[] parametry = new double[4];
     double[] lambda = new double[4];
     double[] bMin = new double[4];
@@ -19,9 +18,8 @@ public abstract class ParametersToFit
     ArrayList<MPoint> fitted = new ArrayList<MPoint>();
 
 
-    public ParametersToFit(double[] noweParametry, double[] parametry, double[] lambda, double[] bMin, double[] bMax, double temp)
+    public ParametersToFit(double[] parametry, double[] bMin, double[] bMax, double temp)
     {
-        this.noweParametry = noweParametry;
         this.parametry = parametry;
         this.lambda = this.getLambda(parametry);
         this.bMin = bMin;

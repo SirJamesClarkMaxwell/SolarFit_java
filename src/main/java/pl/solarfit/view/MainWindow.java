@@ -7,7 +7,6 @@ public class MainWindow
 {
     private JPanel root;
     private JPanel actoionContainer;
-    private Plots plots;
 
     public static void main(String[] args)
     {

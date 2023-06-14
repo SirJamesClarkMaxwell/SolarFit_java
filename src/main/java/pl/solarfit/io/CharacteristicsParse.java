@@ -24,7 +24,7 @@ public class CharacteristicsParse
     private MPoint convertData(String[] data)
     {
         double x = Double.parseDouble(data[0]);
-        double y = Double.parseDouble(data[1]);
+        double y = Math.log(Math.abs((double)Double.parseDouble(data[1])));
         double z = Double.parseDouble(data[2]);
         return new MPoint(x, y, z);
     }

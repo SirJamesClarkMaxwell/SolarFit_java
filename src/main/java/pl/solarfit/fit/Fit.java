@@ -13,9 +13,7 @@ public class Fit extends ParametersToFit
     private ArrayList<Double> parRsch = new ArrayList<Double>();
     private ArrayList<Double> chi2 = new ArrayList<Double>();
     private ArrayList<MPoint> mcInit = new ArrayList<MPoint>();
-    private int NFD;
-    private int MCX;
-    private int MCY;
+
     private boolean append = true;
     private double noise;
 
@@ -72,9 +70,7 @@ public class Fit extends ParametersToFit
                 chi2seg = 3;
             }
         }
-        int ndf = getNFD();
-        int mcX = getMCX();
-        int mcY = getMCY();
+
         if (append)
         {
             this.parI.add(Double.valueOf(noweParametry[0]));
@@ -86,20 +82,8 @@ public class Fit extends ParametersToFit
 
     }
 
-    /* protected int getNDF()
-     {
-         return this.gui.mcNDF.getSelectedIndex();
-     }
 
-     protected int getMCX()
-     {
-         return this.gui.mcX.getSelectedIndex();
-     }
-     protected int getMCY()
-     {
-         return this.gui.mcY.getSelectedIndex();
-     }
- */
+
 
     private double getChi2()
     {
@@ -119,35 +103,6 @@ public class Fit extends ParametersToFit
         return 0.0D;
     }
 
-    public int getNFD()
-    {
-        return NFD;
-    }
-
-    public void setNFD(int NFD)
-    {
-        this.NFD = NFD;
-    }
-
-    public int getMCY()
-    {
-        return MCY;
-    }
-
-    public void setMCY(int MCY)
-    {
-        this.MCY = MCY;
-    }
-
-    public int getMCX()
-    {
-        return MCX;
-    }
-
-    public void setMCX(int MCX)
-    {
-        this.MCX = MCX;
-    }
 
 }
 

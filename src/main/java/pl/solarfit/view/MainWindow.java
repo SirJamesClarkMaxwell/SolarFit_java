@@ -48,21 +48,27 @@ public class MainWindow
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 0;
+        gbc.gridheight = 4;
         gbc.fill = GridBagConstraints.BOTH;
         root.add(actoionContainer, gbc);
         final Actions nestedForm1 = new Actions();
         actoionContainer.add(nestedForm1.$$$getRootComponent$$$(), new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Settings nestedForm2 = new Settings();
         gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         root.add(nestedForm2.$$$getRootComponent$$$(), gbc);
-        plots = new Plots();
+        final Plots nestedForm3 = new Plots();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        root.add(plots.$$$getRootComponent$$$(), gbc);
+        gbc.gridy = 2;
+        root.add(nestedForm3.$$$getRootComponent$$$(), gbc);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        root.add(spacer1, gbc);
     }
 
     /**

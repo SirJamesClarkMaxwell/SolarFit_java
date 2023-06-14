@@ -46,8 +46,9 @@ public class MainWindow
         actoionContainer.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
+        gbc.gridx = 2;
         gbc.gridy = 0;
+        gbc.gridheight = 4;
         gbc.fill = GridBagConstraints.BOTH;
         root.add(actoionContainer, gbc);
         final Actions nestedForm1 = new Actions();
@@ -55,8 +56,19 @@ public class MainWindow
         final Settings nestedForm2 = new Settings();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 3;
         root.add(nestedForm2.$$$getRootComponent$$$(), gbc);
+        final Plots nestedForm3 = new Plots();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        root.add(nestedForm3.$$$getRootComponent$$$(), gbc);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        root.add(spacer1, gbc);
     }
 
     /**

@@ -17,14 +17,14 @@ public class ProposalCharacteristicParse extends CharacteristicsParse
 
     public ProposalCharacteristicParse(List<String> characteristic, double maxParsePercent, double percentStep)
     {
-        super(characteristic);
+        super(characteristic,false);
         this.maxParsePercent = maxParsePercent;
         this.percentStep = percentStep;
     }
 
     public ProposalCharacteristicParse(List<String> characteristic)
     {
-        super(characteristic);
+        super(characteristic,false);
     }
 
     private double findBestParse()

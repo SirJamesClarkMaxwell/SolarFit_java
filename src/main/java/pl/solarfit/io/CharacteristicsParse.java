@@ -3,16 +3,19 @@ package pl.solarfit.io;
 import pl.solarfit.exeptions.MaxValuNotFoundExeption;
 import pl.solarfit.simplex.MPoint;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CharacteristicsParse
 {
     protected final List<String> characteristic;
+    private boolean isLog;
 
-    public CharacteristicsParse(List<String> characteristic)
+    public CharacteristicsParse(List<String> characteristic,boolean isLog)
     {
         this.characteristic = characteristic;
+        this.isLog = isLog;
 
     }
 
@@ -22,10 +25,20 @@ public class CharacteristicsParse
     }
 
     private MPoint convertData(String[] data)
+
     {
         double x = Double.parseDouble(data[0]);
-        double y = Double.parseDouble(data[1]);
+        double y = 0;
         double z = Double.parseDouble(data[2]);
+
+        if (this.isLog)
+        {
+            y = Math.log(Math.abs((double) Double.parseDouble(data[1])));
+        } else
+        {
+            y = Double.parseDouble(data[1]);
+        }
+
         return new MPoint(x, y, z);
     }
 
@@ -51,3 +64,4 @@ public class CharacteristicsParse
         return pointToCheck.stream().max(this::maxComparator).map(MPoint::getY).orElseThrow(MaxValuNotFoundExeption::new);
     }
 }
+

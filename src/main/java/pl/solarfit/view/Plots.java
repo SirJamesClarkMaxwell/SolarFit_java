@@ -162,36 +162,24 @@ public class Plots
     {
         List<XYSeries> seriesOfData = new ArrayList<>();
         XYSeriesCollection dataSets = new XYSeriesCollection();
-        int j = this.stringDatafiles.size();
+
         for (int i = 0; i < this.stringDatafiles.size(); i++)
         {
-            XYSeries currentSeries = new XYSeries("");
+            XYSeries currentSeries = new XYSeries("Series" + i);
+
             List<MPoint> currentCharacteristic = new CharacteristicsParse(this.stringDatafiles.get(i), false).parseCharacteristics();
+            // parsowanie charakterystyk na List<MPoint>
             int upperLimitOfcharacteristic = autoRange(currentCharacteristic, 10);
             List<MPoint> logRnagedCharacteristic = recreateCharacteristic(currentCharacteristic, upperLimitOfcharacteristic);
-            // tutaj do podmiany jest na ProposalCharacterisitcParse
+            // obcinanie zakresy charakterystyki
 
             for (MPoint currentPoint : logRnagedCharacteristic)
                 currentSeries.add(currentPoint.getX(), currentPoint.getY());
-            int lengthOfCurrentSeries = currentSeries.getItemCount();
+
 
             seriesOfData.add((XYSeries) currentSeries.clone());
             currentSeries.clear();
         }
-//        for (List<String> stringCharacteristic : this.stringDatafiles)
-//        {
-//            XYSeries currentSeries = new XYSeries("");
-//            List<MPoint> currentCharacteristic = new CharacteristicsParse(stringCharacteristic).parseCharacteristics();
-//            List<MPoint> rangedCharacteristic = autoRange(currentCharacteristic, 10);
-//            // tutaj do podmiany jest na ProposalCharacterisitcParse
-//
-//            for (MPoint currentPoint : rangedCharacteristic)
-//                currentSeries.add(currentPoint.getX(), currentPoint.getY());
-//
-//            seriesOfData.add(currentSeries);
-//            currentSeries.clear();
-//        }
-
 
         for (XYSeries seriesToAdd : seriesOfData)
             dataSets.addSeries(seriesToAdd);
@@ -265,9 +253,11 @@ public class Plots
         XYPlot plot = chart.getXYPlot();
 
         var renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(2.0f)); //kolor wykresu pierwszej serii
-
+        for (int i = 0; i < dataset.getSeriesCount(); i++)
+        {
+            renderer.setSeriesPaint(i, Color.RED);
+            renderer.setSeriesStroke(i, new BasicStroke(2.0f)); //kolor wykresu pierwszej serii
+        }
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
 

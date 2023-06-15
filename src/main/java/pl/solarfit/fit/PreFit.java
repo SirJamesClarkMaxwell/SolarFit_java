@@ -8,9 +8,9 @@ public class PreFit extends ParametersToFit
     Double limitMin = Double.valueOf(0.5D);
     Double limitMax = Double.valueOf(1.00D);
 
-    public PreFit(double[] noweParametry, double[] parametry, double[] lambda, double[] bMin, double[] bMax, double temp)
+    public PreFit(double[] parametry, double[] bMin, double[] bMax, double temp)
     {
-        super(noweParametry, parametry, lambda, bMin, bMax, temp);
+        super(parametry,bMin, bMax, temp);
     }
     @Override
     protected void fit()
